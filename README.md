@@ -8,10 +8,6 @@
 
 ### Libraries used:
 
-#### library for ds18b20
-1. Dallastemperature 3.8.0 Miles Burton <https://github.com/milesburton/Arduino-Temperature-Control-Library>
-2. oneWire 2.3.4 Jim Studt, Tom Pollard, Robin James, Glenn Trewitt, Jason Dangel <https://github.com/PaulStoffregen/OneWire>
-
 #### library for ccs811 
 1. Adafruit_CCS811 https://github.com/adafruit/Adafruit_CCS811
 

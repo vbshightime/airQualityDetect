@@ -2,23 +2,6 @@
 #define HARDWAREDEFS_H
 
 
-enum DeviceType {
-  ThingHz_Standalone = 1,                // Sensor Node will work as a standalone device and talks to cloud
-  ThingHz_EspNow_Node,                   // Sensor Node will talk back and forth with the Gateway using ESPNow
-  ThingHz_EspNow_WiFiLteHaul_Gateway,    // gateway is powered device that comMunicate with Sensor Nodes using ESPNOw Protocol and post the data to cloud
-  ThingHz_CC1100_Node,                   // Sensor Node will talk back and forth with the Gateway using CC1100
-  ThingHz_CC1100_WiFiLTEHaul_Gateway,    // gateway is powered device that communicate with Sensor Nodes using CC1100 and post the data to cloud
-  DeviceTypeUnknown = 5000
-};
-
-// used to convert enum to strings for sending to could in http requests or printing in debug messages
-const char* deviceTypeEnumToString(uint8_t devType) {
-  static const char* const map[] = { "ThingHz_Standalone", "ThingHz_EspNow_Node",
-                                     "ThingHz_EspNow_WiFiLteHaul_Gateway", "ThingHz_CC1100_Node",
-                                     "ThingHz_CC1100_WiFiLTEHaul_Gateway", "DeviceTypeUnknown"
-                                   };
-  return map[devType];
-}
 
 #define AP_MODE_SSID "Bytebeam-"
 
@@ -81,7 +64,7 @@ String formApSsidName(String deviceId) {
 
 #define WAN_WIFI_SSID_DEFAULT                    "Sarthak"
 #define WAN_WIFI_PASS_DEFAULT                    "wireless18"
-#define DEVICE_ID_DEFAULT                        "THING00001"
+#define DEVICE_ID_DEFAULT                        "Bytebeam_1"
 
 
 

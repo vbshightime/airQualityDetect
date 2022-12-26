@@ -19,6 +19,11 @@ const long  gmtOffset_sec = 19800;
 const int   daylightOffset_sec = 3600;
 const char* ntpServer = "pool.ntp.org";
 
+// on board led pin number
+#define BOARD_LED 2
+
+// led state variable
+int ledState = 0;
 
 
 void setup()
@@ -70,6 +75,24 @@ void setup()
 
 }
 
+// function for ToggleLED action
+int toggleLed(char* args, char* actionId) {
+  Serial.printf("*** args : %s , actionId : %s ***\n", args, actionId);
+  if(RSTATE.isBlindsOpen ? Serial.println("Blinds are open"): Serial.println("Blinds are closed"));
+  RSTATE.isBlindsOpen = !RSTATE.isBlindsOpen;
+  
+  Bytebeam.publishActionCompleted(actionId);
+  return 0;
+}
+
+// function to setup the predefined led 
+void setupLED() {
+  pinMode(BOARD_LED, OUTPUT);
+  digitalWrite(BOARD_LED, ledState);
+}
+
+
+
 void loop()
 {
   if (!RSTATE.isPortalActive)
@@ -81,6 +104,7 @@ void loop()
     if(WiFi.isConnected() && !RSTATE.isBytebeamBegin){
         syncTimeFromNtp();
          Bytebeam.begin();
+         Bytebeam.addActionHandler(toggleLed, "toggle_blind");
          RSTATE.isBytebeamBegin = true;
       }
     Bytebeam.loop();
@@ -147,8 +171,9 @@ void publishToDeviceShadow() {
   deviceShadowJsonObj_1["sequence"]  = sequence;
   if (RSTATE.isBlindsOpen) {
     deviceShadowJsonObj_1["Status"]    = "Blinds are open";
+  }else{
+    deviceShadowJsonObj_1["Status"]    = "Blinds are closed";
   }
-  deviceShadowJsonObj_1["Status"]    = "Blinds are closed";
   deviceShadowJsonObj_1["temperature"]  = (random(70, 89))/10;
   deviceShadowJsonObj_1["humidity"]  = 74;
   deviceShadowJsonObj_1["carbon"]  = random(400, 450);
